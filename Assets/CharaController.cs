@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class CharaController : MonoBehaviour
 {
-    CharacterController cc;
+    private CharacterController cc;
+    private Animator anim;
 
     [SerializeField]
     private float walkSpeed = 3.0f; // 通常時の速度
@@ -20,6 +21,7 @@ public class CharaController : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     // FixedUpdate は0.02秒ごとに呼び出される関数です。物理演算を行う場合はこちらを使うといいです。
@@ -39,6 +41,7 @@ public class CharaController : MonoBehaviour
         }
 
         cc.Move(direction); // キャラクターを移動させる
+        anim.SetFloat("Speed", cc.velocity.magnitude); // アニメーションのパラメーター"Speed"に、現在のキャラクターの速度を渡す
     }
 
     public void Move(Vector2 direction)
